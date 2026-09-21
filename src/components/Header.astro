@@ -112,7 +112,8 @@ import { nav, allPages, mobileNav } from '../data/site';
   @media (max-width: 991px) {
     .hdr-in { flex-direction: column; align-items: flex-start; gap: 30px; padding: 8px 20px; }
     .hdr-row { width: 100%; }
-    .nav, .hdr .hdr-cta { display: none; }
+    /* :global : le bouton est rendu par Button.astro, hors de la portée des styles de l'en-tête */
+    .nav, .hdr :global(.hdr-cta) { display: none; }
     .burger { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; }
     .burger-open { width: 24px; height: 16px; }
     .burger-close { display: none; width: 16px; height: 16px; }
@@ -120,6 +121,6 @@ import { nav, allPages, mobileNav } from '../data/site';
     .open .burger-close { display: block; }
     .open .hdr-in { padding-bottom: 20px; }
     .open .mnav { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
-    .hdr.open .hdr-cta { display: inline-flex; }
+    .hdr.open :global(.hdr-cta) { display: inline-flex; }
   }
 </style>
