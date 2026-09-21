@@ -14,6 +14,21 @@ npm run dev
 
 `npm run build` génère le site statique dans `dist/` (`.html` à plat, `trailingSlash: never`).
 
+## Déploiement
+
+Cloudflare Pages, projet `waas-autoecole-template-gear-up` relié à ce dépôt :
+https://waas-autoecole-template-gear-up.pages.dev. Chaque push sur `main` met la production à jour,
+toute autre branche obtient un aperçu (`<branche>.waas-autoecole-template-gear-up.pages.dev`).
+Réglages : `npm run build`, sortie `dist`, variable `NODE_VERSION=22`.
+
+- URL sans extension et redirections de `/page/` et `/page.html` vers `/page` : natives sur Pages,
+  aucun fichier de configuration.
+- `src/pages/404.astro` produit `dist/404.html`, que Pages sert avec le statut 404. Sans ce fichier,
+  Pages prend le site pour une application monopage et répond l'accueil, en 200, à toute adresse inconnue.
+- `functions/videos/[[path]].js` sert les vidéos par morceaux (réponses 206). Pages ignore l'en-tête
+  `Range` sur ses fichiers statiques, et Safari (iPhone, iPad, Mac) ne lit pas une vidéo sans ces
+  réponses. La fonction ne s'exécute que sur `/videos/*`, et pas en `npm run dev`.
+
 ## Points de rupture du template
 
 | Palier | Largeur | Notes |
@@ -38,6 +53,7 @@ Les presets typographiques ont leurs propres paliers (992–1279 / 768–991 / �
 | `src/components/about/` | sections de la page About (`AboutHero`, `Numbers`, `Gain`, `FaqSection`) |
 | `src/data/` | navigation et coordonnées (`site.ts`), `courses`, `services`, `instructors`, `faq`, `pricing`, contenus des fiches (`courseDetails`, `serviceDetails`, `instructorDetails`) |
 | `public/images/` | images du template (noms Framer conservés) · `public/videos/` les deux vidéos |
+| `functions/videos/` | fonction Cloudflare Pages qui sert les vidéos par morceaux (voir « Déploiement ») |
 
 ## Pages
 
@@ -50,6 +66,7 @@ Les presets typographiques ont leurs propres paliers (992–1279 / 768–991 / �
 | `/courses/[slug]` | Fiche cours | exemplaire complet : `defensive-driving` |
 | `/services/[slug]` | Fiche service | exemplaire complet : `pick-up-drop-off` |
 | `/instructors/[slug]` | Fiche instructeur | exemplaire complet : `jason-miller` |
+| toute adresse inconnue | Page 404 | `pages/404.astro` |
 
 Les autres fiches (5 cours, 5 services, 5 instructeurs) sont générées avec le même gabarit :
 titre, image et accroche viennent des listes de `src/data/`, le corps de texte reprend celui de
@@ -59,7 +76,7 @@ La partie **Actus** (liste, article, catégorie) n'est volontairement pas reprod
 ## À brancher
 
 - **Formulaires** (`ContactForm.astro`) : renseigner `action` (Web3Forms, Formspree…).
-- Le texte de la démo est conservé tel quel (y compris l'e-mail volontairement erroné `info@examle.com` de la page Contact).
+- Le texte de la démo est conservé tel quel (y compris l'e-mail volontairement erroné `info@examle.com` de la page Contact et la faute « your are » de la page 404).
 
 ## Performances
 
