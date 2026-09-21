@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+---
+<Base>
+  <section class="nf">
+    <div class="nf-in">
+      <div class="nf-t">
+        <h1 class="nf-code">404</h1>
+        <div class="nf-h">
+          <h2 class="t-h2 center">Something’s not right.</h2>
+          <p class="t-lead center">We can’t find the page your are looking for.</p>
+        </div>
+      </div>
+      <Button href="/" label="Back to Homepage" variant="jaune" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Page 404 du template : bloc centré sur la hauteur de l'écran, sous l'en-tête fixe.
+     Taille du « 404 » : 160 px jusqu'à 992 px, puis 120 px, puis 100 px sous 768 px. */
+  .nf { display: flex; justify-content: center; align-items: center; min-height: 100vh; background: var(--creme); overflow: clip; }
+  .nf-in { display: flex; flex-direction: column; align-items: center; gap: 40px; width: 100%; max-width: 1210px; padding: 0 20px; }
+  .nf-t { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
+  .nf-code { width: 100%; font: 600 160px/1.2 var(--display); letter-spacing: -0.01em; color: var(--encre); text-align: center; }
+  .nf-h { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+  .nf-h > * { width: 100%; }
+  @media (max-width: 991px) {
+    .nf-in { gap: 30px; }
+    .nf-code { font-size: 120px; }
+    .nf-h { gap: 16px; }
+  }
+  @media (max-width: 767px) { .nf-code { font-size: 100px; } }
+</style>
